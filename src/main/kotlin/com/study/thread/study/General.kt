@@ -9,8 +9,6 @@ import kotlin.system.measureTimeMillis
 
 
 fun main() {
-    println("📊 스레드 성능 비교 테스트")
-
     val regularThreadIoResult = testIOIntensiveThreads()
     printTestResult(regularThreadIoResult)
 
@@ -85,7 +83,7 @@ fun testIOIntensiveThreads(): TestResult {
                 maxActiveThreads.updateAndGet { max -> maxOf(max, Thread.activeCount()) }
 
                 val taskStartTime = System.nanoTime()
-                simulateFileOperationWithoutSuspend("thread_file_$it.txt")
+                simulateFileOperation("thread_file_$it.txt")
                 val taskEndTime = System.nanoTime()
 
                 taskTimes.add((taskEndTime - taskStartTime) / 1_000_000)
@@ -136,7 +134,7 @@ fun testIOIntensiveThreadPool(): TestResult {
                 maxActiveThreads.updateAndGet { max -> maxOf(max, Thread.activeCount()) }
 
                 val taskStartTime = System.nanoTime()
-                simulateFileOperationWithoutSuspend("thread_file_$it.txt")
+                simulateFileOperation("thread_file_$it.txt")
                 val taskEndTime = System.nanoTime()
 
                 taskTimes.add((taskEndTime - taskStartTime) / 1_000_000)

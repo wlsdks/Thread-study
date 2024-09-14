@@ -1,7 +1,11 @@
 package com.study.thread.study
 
-import kotlinx.coroutines.*
-import java.util.concurrent.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 
@@ -21,8 +25,10 @@ fun main() = runBlocking {
 
 // 공유 자원: 모든 스레드가 접근하여 증가시킬 카운터
 var counter = 0
+
 // 동기화를 위한 락 객체
 val lock = Any()
+
 // 락 없이 동시성을 제어하기 위한 AtomicInteger
 val atomicCounter = AtomicInteger(0)
 

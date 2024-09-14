@@ -12,9 +12,6 @@ fun main() = runBlocking {
 //    testCPUIntensiveCoroutines()
 }
 
-// 158ms
-// 6376ms
-
 // 코루틴 테스트 수정
 suspend fun testIOIntensiveCoroutines() = coroutineScope {
     println("\n🚀 코루틴 I/O 집중 작업 테스트 시작")
@@ -33,7 +30,7 @@ suspend fun testIOIntensiveCoroutines() = coroutineScope {
                 threadSet.add(currentThread)
                 peakThreadCount.updateAndGet { maxOf(it, threadSet.size) }
 
-                simulateFileOperation("coroutine_file_$it.txt")
+                simulateFileOperationCoroutine("coroutine_file_$it.txt")
                 tasksCompleted.incrementAndGet()
             }
         }

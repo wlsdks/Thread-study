@@ -8,8 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 
 fun main() {
-    println("📊 스레드, 코루틴, 가상 스레드 성능 비교 테스트 (파일 읽기/쓰기 시뮬레이션)")
-
 //    createTestFiles() // 테스트 파일 생성
     testIOIntensiveVirtualThreadsWithOptimizedMetrics()
 //    testCPUIntensiveVirtualThreadsWithOptimizedMetrics()
