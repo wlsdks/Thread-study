@@ -29,7 +29,7 @@ suspend fun testIOIntensiveCoroutines() = coroutineScope {
     val peakThreadCount = AtomicInteger(0)
 
     val coroutineTime = measureTimeMillis {
-        val jobs = List(FILE_COUNT) {
+        val jobs = List(TEST_COUNT) {
             launch(Dispatchers.IO) {
                 val currentThread = Thread.currentThread()
                 threadSet.add(currentThread)
@@ -44,7 +44,7 @@ suspend fun testIOIntensiveCoroutines() = coroutineScope {
 
     val endThreadCount = threadMXBean.threadCount
     println("🛬 종료 시 활성 스레드 수: $endThreadCount")
-    println("📊 생성된 코루틴 수: $FILE_COUNT")
+    println("📊 생성된 코루틴 수: $TEST_COUNT")
     println("📊 사용된 고유 스레드(OS 수준의 스레드) 수: ${threadSet.size}")
     println("📊 최대 동시 활성 스레드 수: ${peakThreadCount.get()}")
     println("📊 완료된 작업 수: ${tasksCompleted.get()}")
@@ -63,7 +63,7 @@ suspend fun testCPUIntensiveCoroutines() = coroutineScope {
     val peakThreadCount = AtomicInteger(0)
 
     val coroutineTime = measureTimeMillis {
-        val jobs = List(FILE_COUNT) {
+        val jobs = List(TEST_COUNT) {
             launch(Dispatchers.Default) {  // Default 디스패처 사용 (CPU 작업에 적합)
                 val currentThread = Thread.currentThread()
                 threadSet.add(currentThread)
@@ -78,10 +78,10 @@ suspend fun testCPUIntensiveCoroutines() = coroutineScope {
 
     val endThreadCount = threadMXBean.threadCount
     println("🛬 종료 시 활성 스레드 수: $endThreadCount")
-    println("📊 생성된 코루틴 수: $FILE_COUNT")
+    println("📊 생성된 코루틴 수: $TEST_COUNT")
     println("📊 사용된 고유 스레드(OS 수준의 스레드) 수: ${threadSet.size}")
     println("📊 최대 동시 활성 스레드 수: ${peakThreadCount.get()}")
     println("📊 완료된 작업 수: ${tasksCompleted.get()}")
     println("🚀 코루틴 CPU 작업 실행 시간: ${coroutineTime}ms")
-    println("📊 초당 처리된 작업 수: ${"%.2f".format(FILE_COUNT * 1000.0 / coroutineTime)}")
+    println("📊 초당 처리된 작업 수: ${"%.2f".format(TEST_COUNT * 1000.0 / coroutineTime)}")
 }

@@ -27,7 +27,7 @@ fun testIOIntensiveThreadPool(): TestResult {
     val executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
 
     val threadTime = measureTimeMillis {
-        val futures = List(FILE_COUNT) {
+        val futures = List(TEST_COUNT) {
             executor.submit {
                 val threadId = Thread.currentThread().id
                 createdThreads.add(threadId)
@@ -95,7 +95,7 @@ fun testCPUIntensiveThreadPool(): TestResult {
     val executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE)
 
     val threadTime = measureTimeMillis {
-        val futures = List(FILE_COUNT) {
+        val futures = List(TEST_COUNT) {
             executor.submit {
                 val threadId = Thread.currentThread().id
                 createdThreads.add(threadId)

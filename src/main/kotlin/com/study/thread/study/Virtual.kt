@@ -39,7 +39,7 @@ fun dumpThreadsToFile(filename: String) {
 
 // 테스트 파일 생성 함수 (가상 스레드 전용)
 fun createTestFiles() {
-    for (i in 0 until FILE_COUNT) {
+    for (i in 0 until TEST_COUNT) {
         val path = Paths.get("testfile_$i.txt")
         if (!Files.exists(path)) {
             Files.write(path, "Test content for file $i".toByteArray())
@@ -74,7 +74,7 @@ fun testIOIntensiveVirtualThreadsWithOptimizedMetrics() {
 
     val virtualThreadTime = measureTimeMillis {
         val executor = Executors.newVirtualThreadPerTaskExecutor()
-        val tasks = List(FILE_COUNT) {
+        val tasks = List(TEST_COUNT) {
             executor.submit {
                 if (Thread.currentThread().isVirtual) {
                     virtualThreadCounter.incrementAndGet()
@@ -85,7 +85,7 @@ fun testIOIntensiveVirtualThreadsWithOptimizedMetrics() {
                 simulateVirtualThreadFileOperation("testfile_0.txt")
 
                 val completed = tasksCompleted.incrementAndGet()
-                if (completed == FILE_COUNT / 2) {
+                if (completed == TEST_COUNT / 2) {
                     isHalfwayPoint.set(true)
                 }
             }
@@ -110,7 +110,7 @@ fun testIOIntensiveVirtualThreadsWithOptimizedMetrics() {
     println("📊 최대 동시 활성 스레드 수: ${peakActiveThreads.get()}")
     println("📊 완료된 작업 수: ${tasksCompleted.get()}")
     println("🪶 가상 스레드 I/O 작업 실행 시간: ${virtualThreadTime}ms")
-    println("📊 초당 처리된 작업 수: ${"%.2f".format(FILE_COUNT * 1000.0 / virtualThreadTime)}")
+    println("📊 초당 처리된 작업 수: ${"%.2f".format(TEST_COUNT * 1000.0 / virtualThreadTime)}")
 }
 
 
@@ -141,7 +141,7 @@ fun testCPUIntensiveVirtualThreadsWithOptimizedMetrics() {
 
     val virtualThreadTime = measureTimeMillis {
         val executor = Executors.newVirtualThreadPerTaskExecutor()
-        val tasks = List(FILE_COUNT) {
+        val tasks = List(TEST_COUNT) {
             executor.submit {
                 if (Thread.currentThread().isVirtual) {
                     virtualThreadCounter.incrementAndGet()
@@ -152,7 +152,7 @@ fun testCPUIntensiveVirtualThreadsWithOptimizedMetrics() {
                 simulateCPUIntensiveOperation()
 
                 val completed = tasksCompleted.incrementAndGet()
-                if (completed == FILE_COUNT / 2) {
+                if (completed == TEST_COUNT / 2) {
                     isHalfwayPoint.set(true)
                 }
             }
@@ -177,5 +177,5 @@ fun testCPUIntensiveVirtualThreadsWithOptimizedMetrics() {
     println("📊 최대 동시 활성 스레드 수: ${peakActiveThreads.get()}")
     println("📊 완료된 작업 수: ${tasksCompleted.get()}")
     println("🪶 가상 스레드 CPU 작업 실행 시간: ${virtualThreadTime}ms")
-    println("📊 초당 처리된 작업 수: ${"%.2f".format(FILE_COUNT * 1000.0 / virtualThreadTime)}")
+    println("📊 초당 처리된 작업 수: ${"%.2f".format(TEST_COUNT * 1000.0 / virtualThreadTime)}")
 }

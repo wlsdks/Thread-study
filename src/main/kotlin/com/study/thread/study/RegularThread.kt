@@ -7,8 +7,8 @@ import kotlin.system.measureTimeMillis
 
 
 fun main() {
-    val regularThreadIoResult = testIOIntensiveThreads()
-    printTestResult(regularThreadIoResult)
+//    val regularThreadIoResult = testIOIntensiveThreads()
+//    printTestResult(regularThreadIoResult)
 
     val regularThreadCpuResult = testCPUIntensiveThreads()
     printTestResult(regularThreadCpuResult)
@@ -29,15 +29,15 @@ fun testIOIntensiveThreads(): TestResult {
     val taskTimes = ConcurrentLinkedQueue<Long>()
 
     val threadTime = measureTimeMillis {
-        val threads = List(FILE_COUNT) {
+        val threads = List(TEST_COUNT) {
             Thread {
                 createdThreads.add(Thread.currentThread().id)
                 maxActiveThreads.updateAndGet { max -> maxOf(max, Thread.activeCount()) }
-
                 val taskStartTime = System.nanoTime()
-                simulateFileOperation("thread_file_$it.txt")
-                val taskEndTime = System.nanoTime()
 
+                simulateFileOperation("thread_file_$it.txt")
+
+                val taskEndTime = System.nanoTime()
                 taskTimes.add((taskEndTime - taskStartTime) / 1_000_000)
                 tasksCompleted.incrementAndGet()
             }
@@ -75,7 +75,7 @@ fun testCPUIntensiveThreads(): TestResult {
     val taskTimes = ConcurrentLinkedQueue<Long>()
 
     val threadTime = measureTimeMillis {
-        val threads = List(FILE_COUNT) {
+        val threads = List(TEST_COUNT) {
             Thread {
                 createdThreads.add(Thread.currentThread().id)
                 maxActiveThreads.updateAndGet { max -> maxOf(max, Thread.activeCount()) }

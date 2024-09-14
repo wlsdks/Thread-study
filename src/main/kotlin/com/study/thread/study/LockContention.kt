@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 
+const val TASK_COUNT = 300000
 
 fun main() = runBlocking {
     println("📊 동시성 모델별 락 경합 성능 비교 테스트")
