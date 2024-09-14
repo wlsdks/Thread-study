@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 
 fun main() {
-    val threadPoolIoResult = testIOIntensiveThreadPool()
-    printTestResult(threadPoolIoResult)
+//    val threadPoolIoResult = testIOIntensiveThreadPool()
+//    printTestResult(threadPoolIoResult)
 
     val threadPoolCpuResult = testCPUIntensiveThreadPool()
     printTestResult(threadPoolCpuResult)
@@ -29,15 +29,15 @@ fun testIOIntensiveThreadPool(): TestResult {
     val threadTime = measureTimeMillis {
         val futures = List(TEST_COUNT) {
             executor.submit {
-                val threadId = Thread.currentThread().id
+                val threadId = Thread.currentThread().threadId()
                 createdThreads.add(threadId)
                 threadUsageCounts.computeIfAbsent(threadId) { AtomicInteger(0) }.incrementAndGet()
                 maxActiveThreads.updateAndGet { max -> maxOf(max, Thread.activeCount()) }
-
                 val taskStartTime = System.nanoTime()
-                simulateFileOperation("thread_file_$it.txt")
-                val taskEndTime = System.nanoTime()
 
+                simulateFileOperation("thread_file_$it.txt")
+
+                val taskEndTime = System.nanoTime()
                 taskTimes.add((taskEndTime - taskStartTime) / 1_000_000)
 
                 tasksCompleted.incrementAndGet()
@@ -97,15 +97,15 @@ fun testCPUIntensiveThreadPool(): TestResult {
     val threadTime = measureTimeMillis {
         val futures = List(TEST_COUNT) {
             executor.submit {
-                val threadId = Thread.currentThread().id
+                val threadId = Thread.currentThread().threadId()
                 createdThreads.add(threadId)
                 threadUsageCounts.computeIfAbsent(threadId) { AtomicInteger(0) }.incrementAndGet()
                 maxActiveThreads.updateAndGet { max -> maxOf(max, Thread.activeCount()) }
-
                 val taskStartTime = System.nanoTime()
-                simulateCPUIntensiveOperation()
-                val taskEndTime = System.nanoTime()
 
+                simulateCPUIntensiveOperation()
+
+                val taskEndTime = System.nanoTime()
                 taskTimes.add((taskEndTime - taskStartTime) / 1_000_000)
                 tasksCompleted.incrementAndGet()
             }
