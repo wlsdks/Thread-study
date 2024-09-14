@@ -2,6 +2,8 @@ package com.study.thread.study;
 
 import kotlinx.coroutines.*
 import java.lang.management.ManagementFactory
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
@@ -11,6 +13,38 @@ fun main() {
 //    createTestFiles() // 테스트 파일 생성
     testIOIntensiveVirtualThreadsWithOptimizedMetrics()
 //    testCPUIntensiveVirtualThreadsWithOptimizedMetrics()
+}
+
+// 차단 작업을 시뮬레이션하는 함수 (가상 스레드 전용)
+fun simulateVirtualThreadFileOperation(fileName: String) {
+    val path = Paths.get(fileName)
+    // 파일을 읽는 차단 작업
+    Files.readAllBytes(path)  // 실제 파일 읽기 작업
+    Thread.sleep(30)  // I/O 작업 지연 시뮬레이션
+}
+
+// 스레드 덤프를 파일로 저장하는 함수 (가상 스레드 전용)
+fun dumpThreadsToFile(filename: String) {
+    val pid = ManagementFactory.getRuntimeMXBean().name.split("@")[0] // 현재 JVM 프로세스 ID 가져오기
+    val dumpCommand = "jcmd $pid Thread.dump_to_file -format=json $filename"
+
+    try {
+        val process = Runtime.getRuntime().exec(dumpCommand)
+        process.waitFor()
+        println("스레드 덤프가 $filename 파일로 저장되었습니다.")
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+// 테스트 파일 생성 함수 (가상 스레드 전용)
+fun createTestFiles() {
+    for (i in 0 until FILE_COUNT) {
+        val path = Paths.get("testfile_$i.txt")
+        if (!Files.exists(path)) {
+            Files.write(path, "Test content for file $i".toByteArray())
+        }
+    }
 }
 
 // 가상 스레드 I/O 집중 작업 테스트 (최적화된 메트릭스)

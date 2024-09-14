@@ -12,6 +12,11 @@ fun main() = runBlocking {
 //    testCPUIntensiveCoroutines()
 }
 
+// 파일 작업을 시뮬레이션하는 함수 (코루틴 전용)
+suspend fun simulateFileOperationCoroutine(fileName: String) {
+    delay(DELAY_MS) // I/O 작업 시뮬레이션
+}
+
 // 코루틴 테스트 수정
 suspend fun testIOIntensiveCoroutines() = coroutineScope {
     println("\n🚀 코루틴 I/O 집중 작업 테스트 시작")
