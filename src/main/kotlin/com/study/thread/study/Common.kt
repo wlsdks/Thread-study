@@ -3,8 +3,8 @@ package com.study.thread.study;
 import kotlin.math.sin
 
 // 테스트할 작업의 수
-const val TEST_COUNT = 1000
-const val THREAD_POOL_SIZE = 200
+const val TEST_COUNT = 10000
+const val THREAD_POOL_SIZE = 100
 const val DELAY_MS = 10L // I/O 작업을 시뮬레이션하기 위한 지연 시간
 
 
