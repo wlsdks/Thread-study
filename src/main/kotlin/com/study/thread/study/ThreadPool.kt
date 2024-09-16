@@ -8,11 +8,11 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
 
 fun main() {
-//    val threadPoolIoResult = testIOIntensiveThreadPool()
-//    printTestResult(threadPoolIoResult)
+    val threadPoolIoResult = testIOIntensiveThreadPool()
+    printTestResult(threadPoolIoResult)
 
-    val threadPoolCpuResult = testCPUIntensiveThreadPool()
-    printTestResult(threadPoolCpuResult)
+//    val threadPoolCpuResult = testCPUIntensiveThreadPool()
+//    printTestResult(threadPoolCpuResult)
 }
 
 // 스레드 풀 I/O 집중 작업 테스트

@@ -7,11 +7,11 @@ import kotlin.system.measureTimeMillis
 
 
 fun main() {
-//    val regularThreadIoResult = testIOIntensiveThreads()
-//    printTestResult(regularThreadIoResult)
+    val regularThreadIoResult = testIOIntensiveThreads()
+    printTestResult(regularThreadIoResult)
 
-    val regularThreadCpuResult = testCPUIntensiveThreads()
-    printTestResult(regularThreadCpuResult)
+//    val regularThreadCpuResult = testCPUIntensiveThreads()
+//    printTestResult(regularThreadCpuResult)
 }
 
 // 파일 작업을 시뮬레이션하는 함수 (일반 함수)
