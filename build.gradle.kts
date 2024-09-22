@@ -27,6 +27,12 @@ dependencies {
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
+	// retrofit
+	implementation("com.squareup.retrofit2:retrofit:2.11.0")
+	implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+	implementation("com.google.code.gson:gson:2.11.0")
+
+
 	// test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
